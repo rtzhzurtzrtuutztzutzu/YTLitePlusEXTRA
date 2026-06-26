@@ -1,4 +1,4 @@
-name: Build YTLitePlusEXTRA IPA with YTLite Cracked 
+Name: Build YTLitePlusEXTRA IPA with YTLite Cracked 
 on:
   workflow_dispatch:
     inputs:
@@ -32,12 +32,6 @@ on:
         default: true
         required: false
         type: boolean
-
-      # volboost:
-      #   description: "Integrate VolumeBoostYT (Require iOS 16+)"
-      #   default: true
-      #   required: false
-      #   type: boolean
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -152,14 +146,11 @@ jobs:
       - name: Clone YouLoop
         run: git clone --quiet --depth=1 https://github.com/bhackel/YouLoop.git
 
-      - name: Clone Alderis
-        run: git clone --quiet --depth=1 https://github.com/hbang/Alderis.git
-
       - name: Clone YouSlider
         run: git clone --quiet --depth=1 https://github.com/PoomSmart/YouSlider.git
 
       - name: Clone YouChooseQuality
-        run: git clone --quiet https://github.com/PoomSmart/YouChooseQuality.git
+        run: git clone --quiet --depth=1 https://github.com/PoomSmart/YouChooseQuality.git
 
       - name: Clone YTSilentVote
         run: git clone --quiet --depth=1 https://github.com/PoomSmart/YTSilentVote.git
@@ -192,11 +183,6 @@ jobs:
             cd YTPlaybackFix && make clean package DEBUG=0 FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
             mv packages/*.deb ${{ github.workspace }}/ytplaybackfix.deb
            
-
-      # - name: Clone VolumeBoostYT
-      #   if: ${{ inputs.volboost }}
-      #   run: git clone --quiet --depth=1 https://github.com/VasirakCalgux/VolumeBoostYT.git
-        
       - name: Build YouPiP
         run: |
           cd YouPiP
@@ -270,12 +256,6 @@ jobs:
           make clean package DEBUG=0 FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
           mv packages/*.deb ${{ github.workspace }}/youslider.deb
 
-      - name: Build Alderis
-        run: |
-          cd Alderis
-          make clean package DEBUG=0 FINALPACKAGE=1 ARCHS=arm64
-          mv packages/*.deb ${{ github.workspace }}/alderis.deb
-
       - name: Build YouChooseQuality
         run: |
           cd YouChooseQuality
@@ -331,14 +311,6 @@ jobs:
           cd YTVideoErrorAlert
           make clean package DEBUG=0 FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
           mv packages/*.deb ${{ github.workspace }}/ytvideoerror.deb
-     
-
-      # - name: Build VolumeBoostYT
-      #   if: ${{ inputs.volboost }}
-      #   run: |
-      #     cd VolumeBoostYT
-      #     make clean package DEBUG=0 FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless ARCHS=arm64
-      #     mv packages/*.deb ${{ github.workspace }}/volboostyt.deb
           
       - name: Inject Tweaks Into IPA
         run: |
